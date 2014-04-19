@@ -3,37 +3,36 @@
 
 #define COUNT 64
 
-void analyze(int *low_order_bits) {
-    int i;
+static void analyze(char *name, int (*rand_func)(void)) {
+    printf("Testing the low-order bits of the result of rand() from %s\n", name);
     int alternating = 1;
     int ones = 0;
+    int previous;
+    int i;
+
     for (i = 0; i < COUNT; i ++) {
-        printf("%d", low_order_bits[i]);
-        if (low_order_bits[i] == 1) {
+        const int low_order_bit = rand() & 1;
+        printf("%d", low_order_bit);
+        if (low_order_bit == 1) {
             ones ++;
         }
-        if (i > 0 && low_order_bits[i] == low_order_bits[i-1]) {
+        if (i > 0 && low_order_bit == previous) {
             alternating = 0;
         }
+        previous = low_order_bit;
     }
     putchar('\n');
+
     if (alternating) {
         puts("Low order bits alternate 0 and 1 (bad)");
     }
     else {
-        printf("%d zeros, %d ones out of %d total samples\n",
-               COUNT-ones, ones, COUNT);
+        printf("%d samples, %d zeros, %d ones\n",
+               COUNT, COUNT-ones, ones);
     }
 }
 
 int main(void) {
-    int low_order_bits[COUNT];
-    int i;
-
-    puts("Testing the low-order bit of the result of rand() ...");
-    for (i = 0; i < COUNT; i ++) {
-        low_order_bits[i] = rand() & 1;
-    }
-    analyze(low_order_bits);
+    analyze("current implementation", rand);
     return 0;
 }
