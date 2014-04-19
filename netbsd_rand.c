@@ -29,30 +29,29 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#if defined(LIBC_SCCS) && !defined(lint)
-#if 0
-static char sccsid[] = "@(#)rand.c	8.1 (Berkeley) 6/14/93";
-#else
-__RCSID("$NetBSD: rand.c,v 1.10 2003/08/07 16:43:43 agc Exp $");
-#endif
-#endif /* LIBC_SCCS and not lint */
 
-#include <sys/types.h>
-#include <stdlib.h>
+/*
+ * Adapted for "crude_rand_test" project by Keith Thompson, 2014.
+ * No additional rights claimed.
+ *
+ * My understanding is that including BSD-licensed code in a GPL
+ * project is permitted; furthermore, this code sample is small
+ * enough that copying it is likely permitted under fair use.
+ */
 
-static u_long next = 1;
+#include "netbsd_rand.h"
+
+static unsigned long next = 1;
 
 int
-rand()
+netbsd_rand(void)
 {
 	/* LINTED integer overflow */
-	return (int)((next = next * 1103515245 + 12345) % ((u_long)RAND_MAX + 1));
+	return (int)((next = next * 1103515245 + 12345) % ((unsigned long)netbsd_RAND_MAX + 1));
 }
 
 void
-srand(seed)
-	u_int seed;
+netbsd_srand(unsigned int seed)
 {
 	next = seed;
 }

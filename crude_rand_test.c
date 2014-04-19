@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "iso_c_sample_rand.h"
+#include "netbsd_rand.h"
+
 #define COUNT 64
 
 static void analyze(char *name, int (*rand_func)(void)) {
@@ -34,5 +37,11 @@ static void analyze(char *name, int (*rand_func)(void)) {
 
 int main(void) {
     analyze("current implementation", rand);
+    putchar('\n');
+
+    analyze("ISO C sample implementation", iso_c_sample_rand);
+    putchar('\n');
+
+    analyze("NetBSD", netbsd_rand);
     return 0;
 }
