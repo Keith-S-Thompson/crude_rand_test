@@ -61,9 +61,10 @@ alternates between 0 and 1.  The program deliberately does not call
 `srand()` (which is equivalent to calling `srand()` with an initial
 seed of 1).
 
-The current version just tests the current implementation's
-`rand()` function.  I'll update it soon to show the results of other
-implementations, incorporating their source code.
+The current version tests the current implementation's
+`rand()` function as well as a couple of others, compiled
+from source.  (TODO: Add the FreeBSD version, source code
+[here](http://www.opensource.apple.com/source/Libc/Libc-997.1.1/stdlib/FreeBSD/rand.c).
 
 If anyone would care to run this on their system, *particularly* if
 it's a reasonably modern system that exhibits the problem, please
