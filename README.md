@@ -6,7 +6,7 @@ Crude test for crude rand() implementations
 TL;DR: Test whether the low-order bit of the value returned by C's
 `rand()` function consistently alternates between 0 and 1.
 
-## NOTE:
+### NOTE:
 
 A previous version of this program had a serious bug; it didn't
 actually call rand() implementations other than the one provided by
