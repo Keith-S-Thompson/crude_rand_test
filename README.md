@@ -6,7 +6,18 @@ Crude test for crude rand() implementations
 TL;DR: Test whether the low-order bit of the value returned by C's
 `rand()` function consistently alternates between 0 and 1.
 
-ISO C specifies two functions for generating pseudo-random numbers, declared in `<stdlib.h>`:
+== NOTE:
+
+A previous version of this program had a serious bug; it didn't
+actually call rand() implementations other than the one provided by
+the current system.  The current version displays the date when it
+was last updated; results from versions prior to that are invalid
+(other than the output for the current implementation).
+
+---
+
+ISO C specifies two functions for generating pseudo-random numbers,
+declared in `<stdlib.h>`:
 
     void srand(unsigned int seed);
 

@@ -1,3 +1,5 @@
+#define LAST_UPDATE "Mon 2014-04-21 15:49:58 UTC"
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,7 +16,7 @@ static void analyze(char *name, int (*rand_func)(void)) {
     int i;
 
     for (i = 0; i < COUNT; i ++) {
-        const int low_order_bit = rand() & 1;
+        const int low_order_bit = rand_func() & 1;
         printf("%d", low_order_bit);
         if (low_order_bit == 1) {
             ones ++;
@@ -36,6 +38,9 @@ static void analyze(char *name, int (*rand_func)(void)) {
 }
 
 int main(void) {
+    puts("crude_rand_test, last updated " LAST_UPDATE);
+    putchar('\n');
+
     analyze("current implementation", rand);
     putchar('\n');
 
