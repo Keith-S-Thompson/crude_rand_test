@@ -31,12 +31,12 @@ cryptography. For one thing, the seed is an `unsigned int`, which
 means that if `unsigned int` is 32 bits, there are only 2<sup>32</sup>
 possible sequences (and possibly only 2<sup>32</sup> possible internal
 states).  If your system's security depends on random numbers, *don't
-use `rand()`.
+use `rand()`*.
 
 Even worse, there are some implementations where the low-order bit
 of the value returned by `rand()` is almost completely useless; it
 alternates between 0 and 1.  More generally, the Nth low-order bit
-repeats in cycle of 2<sup>N>, so for example the low-order 8 bits
+repeats in cycle of 2<sup>N</sup>, so for example the low-order 8 bits
 will be exactly the same on every 8th call.
 
 The excellent [comp.lang.c FAQ](http://www.c-faq.com/) mentions this
@@ -69,8 +69,8 @@ This small project is a C program that tests an implementation's
 `rand()` function for this particular issue.  It doesn't perform any
 other tests of the quality, just whether the low-order bit consistenly
 alternates between 0 and 1.  The program deliberately does not call
-`srand()` (which is equivalent to calling `srand()` with an initial
-seed of 1).
+`srand()` (not calling `srand()` is equivalent to calling `srand()`
+with an initial seed of 1).
 
 The current version tests the current implementation's
 `rand()` function as well as a couple of others, compiled
