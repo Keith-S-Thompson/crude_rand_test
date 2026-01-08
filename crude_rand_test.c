@@ -1,7 +1,7 @@
-#define LAST_UPDATE "Thu 2026-01-08"
-
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "version.h"
 
 #include "iso_c_sample_rand.h"
 #include "netbsd_rand.h"
@@ -64,7 +64,7 @@ static void test_determinism(void) {
 }
 
 int main(void) {
-    puts("crude_rand_test, last updated " LAST_UPDATE);
+    printf("crude_rand_test %s\n", VERSION);
     putchar('\n');
 
     analyze("current implementation", rand, normal);

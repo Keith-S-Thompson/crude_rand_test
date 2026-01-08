@@ -1,0 +1,5 @@
+#!/bin/sh
+
+version="$(git log -n 1 --date=format:'%F' --pretty='tformat:version %ad %h' || date +"compiled %F")"
+
+echo "#define VERSION \"$version\""
