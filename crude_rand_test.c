@@ -1,4 +1,4 @@
-#define LAST_UPDATE "Mon 2014-04-21 15:49:58 UTC"
+#define LAST_UPDATE "Thu 2026-01-08"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,12 +8,23 @@
 
 #define COUNT 64
 
-static void analyze(char *name, int (*rand_func)(void)) {
+enum behavior { normal, deterministic };
+
+static void analyze(char *name, int (*rand_func)(void), enum behavior behavior) {
     printf("Testing the low-order bits of the result of rand() from %s\n", name);
     int alternating = 1;
     int ones = 0;
     int previous;
     int i;
+
+    if (behavior == deterministic) {
+#ifdef __OpenBSD__
+	srand_deterministic(1);
+#else
+	fprintf(stdout, "%s:%d: Internal error\n", __FILE__, __LINE__);
+	return;
+#endif
+    }
 
     for (i = 0; i < COUNT; i ++) {
         const int low_order_bit = rand_func() & 1;
@@ -37,16 +48,40 @@ static void analyze(char *name, int (*rand_func)(void)) {
     }
 }
 
+static void test_determinism(void) {
+    int x1, x2, x3;
+    int y1, y2, y3;
+    srand(1);
+    x1 = rand(); x2 = rand(); x3 = rand();
+    srand(1);
+    y1 = rand(); y2 = rand(); y3 = rand();
+    if (x1 == y1 && x2 == y2 && x3 == y3) {
+        puts("The current implementation's rand() is properly deterministic");
+    }
+    else {
+        puts("The current implementation's rand() is not deterministic (non-conforming");
+    }
+}
+
 int main(void) {
     puts("crude_rand_test, last updated " LAST_UPDATE);
     putchar('\n');
 
-    analyze("current implementation", rand);
+    analyze("current implementation", rand, normal);
     putchar('\n');
 
-    analyze("ISO C sample implementation", iso_c_sample_rand);
+#ifdef __OpenBSD__
+    analyze("current implementation with srand_deterministic(1)", rand, deterministic);
+    putchar('\n');
+#endif
+
+    analyze("ISO C sample implementation", iso_c_sample_rand, normal);
     putchar('\n');
 
-    analyze("NetBSD", netbsd_rand);
+    analyze("NetBSD", netbsd_rand, normal);
+    putchar('\n');
+
+    test_determinism();
+
     return 0;
 }

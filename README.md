@@ -82,4 +82,8 @@ it's a reasonably modern system that exhibits the problem, please
 send me the results and I'll publish them here (when and if I get
 around to it).
 
+I've found a 2010 comp.lang.c article from Larry Jones that
+very probably explains the origins of the low-order-big bug.
+See `larry-jones-article.txt`.
+
     -- Keith Thompson <Keith.S.Thompson@gmail.com> Sat 2014-04-19
