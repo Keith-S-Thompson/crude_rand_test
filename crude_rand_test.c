@@ -59,7 +59,7 @@ static void test_determinism(void) {
         puts("The current implementation's rand() is properly deterministic");
     }
     else {
-        puts("The current implementation's rand() is not deterministic (non-conforming");
+        puts("The current implementation's rand() is not deterministic (non-conforming)");
     }
 }
 
